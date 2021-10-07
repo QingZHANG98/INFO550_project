@@ -1,0 +1,151 @@
+---
+title: "Homework2 INFO550"
+Author: "Qing Zhang"
+Date: "23 Sep 2021"
+output: html_document
+---
+# A Primary Analysis of Real Breast Cancer Datas
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+```
+```{r read_dataset}
+##########################################################
+# Program: BreastCancer_dataset_preproc1 
+# Dataset: https://www.kaggle.com/amandam1/breastcancerdataset
+# Date: Sep 23, 2021
+# Author: Qing Zhang
+# Processing: Data cleaning $ Description
+#			 - Missing values: remove the rows
+#			 - Duplication: keep one row
+#			 - Description: table & distribution plot
+##########################################################
+# R version 3.6.1
+##########################################################
+
+################ loading and data cleaning################
+# Inclusive Criteria - female
+##########################################################
+Path = "./dataset//breast cancer//BRCA.csv"
+
+df <- read.csv(Path,header = TRUE,stringsAsFactors = FALSE)
+df[df==""] <- NA
+df <- df[df$Gender=="FEMALE",]
+names(df)[1] <- 'PatientID'
+
+#### drop duplications
+DupTable <- table(duplicated(df))
+DupPerc <- DupTable[2]/sum(DupTable)*100
+df <- df[!duplicated(df),]
+```
+This primary analysis aims to find the potential relationship between breast cancer patients' status and their mortality risk. Because the sample size is small, the variation of some factors are non-informative for analysis. But in reality, some cancer mutations are rare but have high effect.  So, I select the subgroupof female. Besides, I will not consider the effect of PR and ER status as they have no variation in this data.
+
+In this dataset, `r DupPerc`% are duplication, and they are removed.
+```{r,missing_values}
+if(!require(DataExplorer)){
+  install.packages("DataExplorer")
+  require(DataExplorer)
+}
+plot_missing(df,title = "Proportion of Missing")
+
+#### drop NA
+df <- df[complete.cases(df),]
+```
+  
+As we can see in a missing values plot, patient status and date of last visit are the main missing. These missing values will be ignored in this analysis, but they could be informative in survival/longitudinal analysis.
+
+
+## Results
+```{r,results="hide"}
+#### format
+CatVars <- c("Patient_Status","Surgery_type","HER2.status","PR.status","ER.status","Tumour_Stage","Gender")
+NumVars <- c("Protein1","Protein2","Protein3","Protein4","Age")
+TimeVars <- c("Date_of_Surgery","Date_of_Last_Visit")
+
+#### format time vars for calculation
+Sys.setlocale("LC_TIME", "C")
+for (Tmp in TimeVars) {
+	df[,Tmp] <- as.Date(df[,Tmp],format ="%d-%b-%y")
+}
+
+for (tmp in CatVars) {
+	df[,Tmp] <- as.factor(df[,Tmp])
+}
+```
+
+
+
+Table.1 shows patients' status, the surgery they received. 14.8% patients of dead had received lumpectomy, and 22.6% patients of survival. But this ratio should be adjusted by the status and type of cancer, since the less severe cases could not be recommended to take a lumpectomy.  
+
+Figure.1 shows the proportion of patients have HER2 positive among dead is lower than survival patient. It might because there is HER2 targeted medicine.  
+
+It seems that the proteins have no effect on mortality on average in figure.2. However, some outliers are remarkable, they could have different effect in stratification.  
+
+```{r}
+if(!require(table1)){
+  install.packages("table1")
+  require(table1)
+}
+
+# factors in table
+Labels <- list(
+          variables=list(Age="Age (years)",
+          				      Histology="Histology",
+                        Tumour_Stage="Tumour Stage",
+                        Surgery_type="Surgery type",
+                        HER2.status="HER2 Receptor",
+          				      Protein1="Protein1",
+          				      Protein2="Protein2",
+          				      Protein3="Protein3",
+          				      Protein4="Protein4"),
+          outcomes=list("Alive","Dead"))
+
+# groups in table
+Strata <- c(list(Total=df), split(df, df$Patient_Status))
+
+# print table 
+table1(Strata,labels=Labels,data=df,render.missing=NULL,caption = "Table.1 Demographic Characteristics")
+```
+
+
+```{r,receptor, fig.cap="figure.1 HER2 and mortality"}
+######################## figs #########################
+if(!require(car)){
+  install.packages("car")
+  require(car)
+}
+#### Options
+Factor <- "HER2.status"
+YLab <- "number of cases"
+XLab <- "Patient status"
+YLim <- c(0,250)
+Color <- c("steelblue", "red")
+LegendPos <- "topright"
+####
+
+### barplot
+Table <- table(df[,c(Factor,'Patient_Status')])
+barplot(height = Table,ylab = YLab,xlab = XLab,ylim = YLim,main = paste(Factor," Death"),col=Color)
+legend(LegendPos,legend = rownames(Table),fill = Color)
+```
+```{r,protein, fig.cap="figure.2 Proteins and mortality"}
+### boxplot by ggplot2
+if(!require(reshape2)){
+  install.packages("reshape2")
+  require(reshape2)
+}
+
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  require(ggplot2)
+}
+
+
+PtWidth <- df[,c("Protein1","Protein2","Protein3","Protein4","Patient_Status")]
+PtLong <- melt(data = PtWidth,
+             id.vars = c('Patient_Status'),
+             variable.name = 'ProteinsCat',
+             value.name = 'ProteinsVal'
+)
+
+ggplot(PtLong, aes(ProteinsCat, ProteinsVal, fill=Patient_Status)) + geom_boxplot() + labs(x="Proteins",y="concentration",title="Proteins * Patients status")
+```
