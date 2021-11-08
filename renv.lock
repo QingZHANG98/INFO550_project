@@ -9,13 +9,6 @@
     ]
   },
   "Packages": {
-    "DataExplorer": {
-      "Package": "DataExplorer",
-      "Version": "0.8.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "7ac7d2d1133bead1a5102819397e414d"
-    },
     "GGally": {
       "Package": "GGally",
       "Version": "2.1.2",
@@ -751,13 +744,6 @@
       "Repository": "CRAN",
       "Hash": "4fffc0d02071a6150c1016fb8766224c"
     },
-    "networkD3": {
-      "Package": "networkD3",
-      "Version": "0.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "38310ec4ddb1398359abdd603c151067"
-    },
     "nlme": {
       "Package": "nlme",
       "Version": "3.1-153",
@@ -954,13 +940,6 @@
       "Repository": "CRAN",
       "Hash": "0f4d941129e00ed34a7d192b1da7ccef"
     },
-    "reshape2": {
-      "Package": "reshape2",
-      "Version": "1.4.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "bb5996d0bd962d214a11140d77589917"
-    },
     "rio": {
       "Package": "rio",
       "Version": "0.5.27",
@@ -1121,13 +1100,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "5be9fcf8ef6763e8cb13ab009e273a1d"
-    },
-    "table1": {
-      "Package": "table1",
-      "Version": "1.4.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d098cc323490c269c4315ed76eaf94a3"
     },
     "tibble": {
       "Package": "tibble",
