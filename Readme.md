@@ -8,7 +8,7 @@ This report is made by R. Make sure the R has been installed. R packages 'renv' 
 
 ```
 if(!require(renv)){
-  install.packages("DataExplorer")
+  install.packages("renv")
   require(renv)
 }
 ```
@@ -16,7 +16,7 @@ if(!require(renv)){
 ## Activate the environment
 
 ```
-Rscript -e "renv::activate('./')"
+Rscript -e "renv::activate("./")"
 ```
 
 
