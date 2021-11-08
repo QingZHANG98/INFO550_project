@@ -4,7 +4,30 @@ The dataset is a Real Breast Cancer Data from Kaggle (URL: https://www.kaggle.co
 
 More questions please report ISSUES or email me [qzha284@emory.edu](mailto:qzha284@emory.edu)
 
-First cd to the repository
+This report is made by R. Make sure the R has been installed. R packages 'renv' is needed. All versions of packages are locked by renv.
+
+```
+if(!require(renv)){
+  install.packages("DataExplorer")
+  require(renv)
+}
+```
+
+## Activate the environment
+
+```
+Rscript -e "renv::activate('./')"
+```
+
+
+
+**Down load the files**
+
+```
+git clone https://github.com/QingZHANG98/INFO550_project.git
+## move to the repository
+cd INFO550_project
+```
 
 ## Execute the analysis
 

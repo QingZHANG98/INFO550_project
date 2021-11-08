@@ -17,16 +17,6 @@ if(!require(renv)){
 }
 # use renv to install the required packages with specific version
 require(dplyr)
-require(knitr)
-require(gtsummary) # make table
-require(naniar) # vis missing valuse
-## survival analysis and plot
-require(finalfit)
-require(survminer)
-require(survival)
-require(ggplot2)
-require(htmlTable) # not necessary, just print the table in exploration
-require(sjPlot)
 
 ############ import the raw data ###################
 # set the project root directory
