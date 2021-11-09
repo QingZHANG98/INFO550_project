@@ -590,13 +590,7 @@
       "Repository": "CRAN",
       "Hash": "41e3b9df8e07dba367a58462cc328721"
     },
-    "lattice": {
-      "Package": "lattice",
-      "Version": "0.20-44",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "f36bf1a849d9106dc2af72e501f9de41"
-    },
+
     "lifecycle": {
       "Package": "lifecycle",
       "Version": "1.0.1",
@@ -982,13 +976,7 @@
       "Repository": "CRAN",
       "Hash": "566b73db4f3b2f517e707e1c73267325"
     },
-    "survival": {
-      "Package": "survival",
-      "Version": "3.2-11",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "f4d706b25d640dbaeb56d9c9b6ce9a22"
-    },
+
     "survminer": {
       "Package": "survminer",
       "Version": "0.4.9",
