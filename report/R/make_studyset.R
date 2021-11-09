@@ -6,15 +6,13 @@
 ################################################
 
 ############ required packages ######################
-
 if(!require(renv)){
-  install.packages("renv")
-  require(renv)
-}
-
-# use renv to install the required packages with specific version
+    install.packages('renv')
+    require(renv)
+  }
+  
 require(dplyr)
-
+require(here)
 ############ import the raw data ###################
 # set the project root directory
 here::i_am('report/R/make_studyset.R')
