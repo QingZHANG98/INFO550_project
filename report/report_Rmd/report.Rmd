@@ -6,6 +6,7 @@ output: html_document
 ```{r setup,echo = F,include =F,message=F}
 require(naniar)
 require(dplyr)
+require(here)
 
 knitr::opts_chunk$set(echo = FALSE,include =FALSE,message=F)
 here::i_am("INFO550_project/report/report_Rmd/report.Rmd")
@@ -92,7 +93,7 @@ In my analysis, I used reference code, so the blank values means it's the refere
 Univariable is the crude hazard ratio, and the multivariable is the adjusted effect(controlling for other variables). Here, I think the protein2, protein4, tumor stage and surgery type have potential association with survival experience. And there could be potential interaction among the proteins.  
 
 ```{r univ_result, include = T}
-univ_analysis
+univ_analysis %>% knitr::kable()
 ```
 Let me check the correlation among proteins and age. Obviously, some of them are correlated, but now I don't care about them.  
 
@@ -101,8 +102,8 @@ Let me check the correlation among proteins and age. Obviously, some of them are
 Here are some grouped KM plots. In survival analysis, we always use the log-rank test. However, it cannot detect the difference when the survival functions are crossed.  
 ```{r kmplots,include=T}
 # KM-plot
-require(survminer)
-require(survival)
+#require(survminer)
+#require(survival)
 
 # grouped by quantile
 data <- data %>% 
@@ -113,25 +114,17 @@ data <- data %>%
 )
 ```
 
-![Figure 2](../figs/KM_fig1.png)  
-
-![Figure 3](../figs/KM_fig2.png)  
-
-![Figure 4](../figs/KM_fig3.png)  
-
 I find that the histology would impact the survial probability in the first year after surgery. the outcomes are a little within one year.  
-
-![Figure 5](../figs/KM_fig4.png)
 ```{r coxph1year, include = T}
 ## compare the 1 year survival of the Ductal Carcinoma and Lobular Carcinoma
-Histo1Year <- data %>% filter(survdays <=365) %>%
-  filter(Histology %in% c('Infiltrating Ductal Carcinoma','Infiltrating Lobular Carcinoma')) %>%
-  mutate(Lobular = as.numeric(Histology=='Infiltrating Lobular Carcinoma'))
-
-coxph(Surv(survdays,censor) ~ Lobular,data = Histo1Year) %>%
-  tbl_regression(exp = TRUE,label = list(Lobular ~ 'Infiltrating Lobular Carcinoma')) %>%
-  modify_caption('One year survival, Infiltrating Lobular Carcinoma vs Infiltrating Ductal Carcinoma. Crude HR') %>%
-  bold_labels()
+#Histo1Year <- data %>% filter(survdays <=365) %>%
+#  filter(Histology %in% c('Infiltrating Ductal Carcinoma','Infiltrating Lobular Carcinoma')) %>%
+#  mutate(Lobular = as.numeric(Histology=='Infiltrating Lobular Carcinoma'))
+#
+#coxph(Surv(survdays,censor) ~ Lobular,data = Histo1Year) %>%
+#  tbl_regression(exp = TRUE,label = list(Lobular ~ 'Infiltrating Lobular Carcinoma')) %>%
+#  modify_caption('One year survival, Infiltrating Lobular Carcinoma vs Infiltrating Ductal Carcinoma. Crude HR') %>%
+#  bold_labels()
 ```
 
 Finally, I choose this model. I believe the protein 4 is associated with the survival experience. It's adjusted by tumor stage, histology, and protein2.  
@@ -139,7 +132,7 @@ Finally, I choose this model. I believe the protein 4 is associated with the sur
 ### final coxph model
 multi_analysis <- data %>%
   finalfit(OverallSurv,c('Protein4','Tumour_Stage','Histology','Protein2'))
-multi_analysis
+multi_analysis %>% knitr::kable()
 ```
 
 ### Objective 2: find the treatment and the expectation
