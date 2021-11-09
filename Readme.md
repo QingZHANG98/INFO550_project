@@ -29,8 +29,14 @@ if(!require(renv)){
 }
 ```
 
+synchronize the library
+
 ```
-## activate the environment
+renv::restore()
+```
+
+```
+## activate the environment if you don't have to install any package
 renv::activate("./") ## "./" is the path of renv. If you have checkout
 ```
 

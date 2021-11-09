@@ -1,5 +1,5 @@
-here::i_am('INFO550_project/report/R/make_figs.R')
-data <- read.csv(here::here('INFO550_project/data',"data.csv"),na.strings = "")
+here::i_am('report/R/make_figs.R')
+data <- read.csv(here::here('./data',"data.csv"),na.strings = "")
 require(dplyr)
 
 data <- data %>% mutate(Surgery_type = factor(Surgery_type,levels = c("Simple Mastectomy","Lumpectomy","Modified Radical Mastectomy","Other"))) %>%

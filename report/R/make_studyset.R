@@ -17,8 +17,8 @@ require(dplyr)
 
 ############ import the raw data ###################
 # set the project root directory
-here::i_am('INFO550_project/report/R/analysis.R')
-raw_data <- read.csv(here::here('INFO550_project/raw_data',"BRCA.csv"),na.strings = "")
+here::i_am('report/R/make_studyset.R')
+raw_data <- read.csv(here::here('raw_data',"BRCA.csv"),na.strings = "")
 # drop incomplete rows
 data <- raw_data[complete.cases(raw_data),]
 
@@ -40,4 +40,4 @@ data <- data %>%
   mutate(survdays = as.numeric(Date_of_Last_Visit - Date_of_Surgery))
 
 ############## saving dataset
-write.csv(data,here::here('INFO550_project/data',"data.csv"))
+write.csv(data,here::here('./data',"data.csv"))
