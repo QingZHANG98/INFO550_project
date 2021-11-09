@@ -72,13 +72,6 @@
       "Repository": "CRAN",
       "Hash": "dab19adae4440ae55aa8a9d238b246bb"
     },
-    "RcppArmadillo": {
-      "Package": "RcppArmadillo",
-      "Version": "0.10.7.0.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "76a46d0219364e5f6c8b04a148760acf"
-    },
     "RcppEigen": {
       "Package": "RcppEigen",
       "Version": "0.3.3.9.1",
