@@ -192,5 +192,6 @@ p1 <- sjPlot::plot_model(fit_surgery,mdrt.values = "meansd",type = "pred",
        y = "Survival probability")
 p1
 
-
+corrplot::corrplot(cor(corp)) %>%
+  
                    

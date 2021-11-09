@@ -6,15 +6,12 @@
 ################################################
 
 ############ required packages ######################
-if(!require(here)){
-  install.packages("DataExplorer")
-  require(here)
-}
 
 if(!require(renv)){
-  install.packages("DataExplorer")
+  install.packages("renv")
   require(renv)
 }
+
 # use renv to install the required packages with specific version
 require(dplyr)
 
