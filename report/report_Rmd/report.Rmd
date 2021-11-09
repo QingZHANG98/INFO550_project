@@ -4,13 +4,18 @@ output: html_document
 ---
 
 ```{r setup,echo = F,include =F,message=F}
-knitr::opts_chunk$set(echo = FALSE,include =FALSE,message=F)
-here::i_am("INFO550_project/report/report_Rmd/report.Rmd")
-knitr::opts_knit$set(root.dir = here::here('INFO550_project'))
-
 require(naniar)
 require(here)
 require(dplyr)
+
+if(!require(kableExtra)){
+    install.packages('kableExtra')
+    require(kableExtra)
+  }
+
+knitr::opts_chunk$set(echo = FALSE,include =FALSE,message=F)
+here::i_am("INFO550_project/report/report_Rmd/report.Rmd")
+knitr::opts_knit$set(root.dir = here::here('INFO550_project'))
 ```
 
 **Missing data **  
@@ -64,7 +69,6 @@ table_1
 # Result  
 ## Objective 1: analysis of the risk factor of death  
 ```{r some_prereq}
-require(kableExtra) ## make great table 
 ## subset for survival probability
 Surv1Year <- data %>%
   filter(survdays <= 365.25)
@@ -83,8 +87,7 @@ UnivCovs <- c("Age","Protein1","Protein2","Protein3","Protein4",
 ### fit models
 univ_analysis <- data %>%
   finalfit(OverallSurv,UnivCovs) %>%
-  kable() %>%
-  kable_classic()
+  kableExtra::kable()
 
 ### protein2, protein4, tumor stage, surgery type ~ association
 ### protein1 ~ potential interaction
@@ -142,9 +145,9 @@ Finally, I choose this model. I believe the protein 4 is associated with the sur
 ```{r finsurvmodel,include=T}
 ### final coxph model
 multi_analysis <- data %>%
-  finalfit(OverallSurv,c('Protein4','Tumour_Stage','Histology','Protein2')) %>%
-  kable(caption="Table 3. Adjusted Survival model")
-multi_analysis
+  finalfit(OverallSurv,c('Protein4','Tumour_Stage','Histology','Protein2'))
+multi_analysis  %>%
+  kableExtra::kable()
 ```
 
 ### Objective 2: find the treatment and the expectation
