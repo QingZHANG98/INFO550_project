@@ -24,8 +24,12 @@ dev.off()
 
 ################## KM-plot #######
 require(survminer)
-require(survival)
 require(ggplot2)
+
+if(!require(survival)){
+    install.packages('survival')
+    require(survival)
+  }
 
 # grouped by quantile
 data <- data %>% 

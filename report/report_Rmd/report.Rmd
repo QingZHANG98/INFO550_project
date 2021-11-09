@@ -5,13 +5,7 @@ output: html_document
 
 ```{r setup,echo = F,include =F,message=F}
 require(naniar)
-require(here)
 require(dplyr)
-
-if(!require(kableExtra)){
-    install.packages('kableExtra')
-    require(kableExtra)
-  }
 
 knitr::opts_chunk$set(echo = FALSE,include =FALSE,message=F)
 here::i_am("INFO550_project/report/report_Rmd/report.Rmd")
@@ -86,8 +80,7 @@ UnivCovs <- c("Age","Protein1","Protein2","Protein3","Protein4",
               "Tumour_Stage","receptor","Surgery_type","Histology")
 ### fit models
 univ_analysis <- data %>%
-  finalfit(OverallSurv,UnivCovs) %>%
-  kableExtra::kable()
+  finalfit(OverallSurv,UnivCovs) 
 
 ### protein2, protein4, tumor stage, surgery type ~ association
 ### protein1 ~ potential interaction
@@ -146,8 +139,7 @@ Finally, I choose this model. I believe the protein 4 is associated with the sur
 ### final coxph model
 multi_analysis <- data %>%
   finalfit(OverallSurv,c('Protein4','Tumour_Stage','Histology','Protein2'))
-multi_analysis  %>%
-  kableExtra::kable()
+multi_analysis
 ```
 
 ### Objective 2: find the treatment and the expectation

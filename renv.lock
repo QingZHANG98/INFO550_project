@@ -590,7 +590,13 @@
       "Repository": "CRAN",
       "Hash": "41e3b9df8e07dba367a58462cc328721"
     },
-
+    "lattice": {
+      "Package": "lattice",
+      "Version": "0.20-44",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f36bf1a849d9106dc2af72e501f9de41"
+    },
     "lifecycle": {
       "Package": "lifecycle",
       "Version": "1.0.1",
@@ -640,7 +646,13 @@
       "Repository": "CRAN",
       "Hash": "c166f04bd2bbd830ab34b7329104c019"
     },
-
+    "mgcv": {
+      "Package": "mgcv",
+      "Version": "1.8-36",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "93cc747b0e1ad882a4570463c3575c23"
+    },
     "mice": {
       "Package": "mice",
       "Version": "3.13.0",
@@ -872,7 +884,13 @@
       "Repository": "CRAN",
       "Hash": "18f47d9adafc32abd3d0f450036f739e"
     },
-
+    "rlang": {
+      "Package": "rlang",
+      "Version": "0.4.11",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "515f341d3affe0de9e4a7f762efb0456"
+    },
     "rmarkdown": {
       "Package": "rmarkdown",
       "Version": "2.11",
@@ -964,7 +982,13 @@
       "Repository": "CRAN",
       "Hash": "566b73db4f3b2f517e707e1c73267325"
     },
-
+    "survival": {
+      "Package": "survival",
+      "Version": "3.2-11",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f4d706b25d640dbaeb56d9c9b6ce9a22"
+    },
     "survminer": {
       "Package": "survminer",
       "Version": "0.4.9",

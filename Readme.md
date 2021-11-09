@@ -4,9 +4,13 @@ The dataset is a Real Breast Cancer Data from Kaggle (URL: https://www.kaggle.co
 
 More questions please report ISSUES or email me [qzha284@emory.edu](mailto:qzha284@emory.edu)
 
-This report is made by R 4.1.1. Make sure R >= 4.0 has been installed. R packages 'renv' is needed. All versions of packages are locked by renv. 
-
-
+## Prerequisite
+This report is made by R 4.1.1. Make sure R >= 4.0 has been installed.  
+R packages 'renv' is needed. All versions of packages are locked by renv.  
+GNU Make is needed. In MacOS, install the Xcode. In linux:
+```
+sudo apt-get install make
+```
 
 **Download the project and checkout the directory**
 
