@@ -970,13 +970,7 @@
       "Repository": "CRAN",
       "Hash": "566b73db4f3b2f517e707e1c73267325"
     },
-    "survival": {
-      "Package": "survival",
-      "Version": "3.2-11",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "f4d706b25d640dbaeb56d9c9b6ce9a22"
-    },
+
     "survminer": {
       "Package": "survminer",
       "Version": "0.4.9",
