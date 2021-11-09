@@ -590,7 +590,7 @@
       "Repository": "CRAN",
       "Hash": "41e3b9df8e07dba367a58462cc328721"
     },
-    
+
     "lifecycle": {
       "Package": "lifecycle",
       "Version": "1.0.1",
@@ -640,13 +640,7 @@
       "Repository": "CRAN",
       "Hash": "c166f04bd2bbd830ab34b7329104c019"
     },
-    "mgcv": {
-      "Package": "mgcv",
-      "Version": "1.8-36",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "93cc747b0e1ad882a4570463c3575c23"
-    },
+
     "mice": {
       "Package": "mice",
       "Version": "3.13.0",
