@@ -21,12 +21,14 @@ png(filename = "./report/figs/corrplot.png")
 corrplot::corrplot(cor(corp))
 dev.off()
 
-####### there are some bugs to execute kmplot in windows system
+####### there are some bugs to execute KMplot in linux, I'm trying to solve it ######
 ################## KM-plot #######
 
 ########## code ############
-# require(survminer)
-require(ggplot2)
+# if(!require(survminer)){
+#     install.packages('survminer')
+#     require(survminer)
+#   }
 
 # if(!require(survival)){
 #     install.packages('survival')
@@ -89,8 +91,10 @@ require(ggplot2)
 # )+
 # labs(title = "The first year KM est grouped by Histology")
 # dev.off()
+#############################################################
 
-##### objective 2 
+##### Result 2 
+require(ggplot2)
 table_stage <- data.frame(table(data$Surgery_type,data$Tumour_Stage))
 colnames(table_stage) <- c("surgery","stage","Freq")
 
@@ -102,10 +106,10 @@ dev.off()
 ##### objective 2, fig2. one year survival in different group
 fit_surgery <- glm(data = Surv1Year,-censor+2 ~ Tumour_Stage * Surgery_type + Protein4 + Histology,family = "binomial")
 p1 <- sjPlot::plot_model(fit_surgery,mdrt.values = "meansd",type = "pred", 
-                   terms = c("Surgery_type","Tumour_Stage")) +
-  theme(axis.text.x = element_text(angle = 45)) +
-  labs(title = "Predicted Probabilities of One-year Survival",
-       y = "Survival probability")
+  terms = c("Surgery_type","Tumour_Stage")) +
+theme(axis.text.x = element_text(angle = 45)) +
+labs(title = "Predicted Probabilities of One-year Survival",
+  y = "Survival probability")
 
 png(filename = "./report/figs/part2_fig2.png")
 p1

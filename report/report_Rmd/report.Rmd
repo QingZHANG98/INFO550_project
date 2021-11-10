@@ -36,24 +36,23 @@ Population characteristics
 # make factors
 ## reorder the levels, put "other" to the last
 ## alive = 1, dead = 2
-
 data <- data %>% mutate(Surgery_type = factor(Surgery_type,levels = c("Simple Mastectomy","Lumpectomy","Modified Radical Mastectomy","Other"))) %>%
   mutate(censor = as.numeric(factor(Patient_Status, levels = c("Alive","Dead"),labels = c(1,2)))) %>%
   mutate_at(vars(Tumour_Stage,Surgery_type,Histology),factor)
 
 ################ make table 1 #################
 require(gtsummary)
+
 table_1 <- data %>%
   select(Age,Protein1,Protein2,Protein3,Protein4,Tumour_Stage,receptor,Histology,Surgery_type,
-         Patient_Status,survdays) %>%
+    Patient_Status,survdays) %>%
 
   ## make table
   tbl_summary(label = list(Tumour_Stage ~ "Tumor Stage",
-                           receptor ~ "Progesterone Receptors",
-                           Patient_Status ~ "Patient Status",
-                           Surgery_type ~ "Surgery Type",
-                           survdays ~ "Observed Survival Days"
-                           )
+    receptor ~ "Progesterone Receptors",
+    Patient_Status ~ "Patient Status",
+    Surgery_type ~ "Surgery Type",
+    survdays ~ "Observed Survival Days")
               ) %>%
   modify_caption("Table 1. Population Charateristics")
 ```
@@ -62,7 +61,7 @@ table_1
 ```
 
 # Result  
-## Objective 1: analysis of the risk factor of death  
+## Result 1: analysis of the risk factor of death  
 ```{r some_prereq}
 ## subset for survival probability
 Surv1Year <- data %>%
@@ -78,7 +77,7 @@ Surv5Year <- data %>%
 require(finalfit)
 OverallSurv <- "Surv(survdays,censor)"
 UnivCovs <- c("Age","Protein1","Protein2","Protein3","Protein4",
-              "Tumour_Stage","receptor","Surgery_type","Histology")
+  "Tumour_Stage","receptor","Surgery_type","Histology")
 ### fit models
 univ_analysis <- data %>%
   finalfit(OverallSurv,UnivCovs) 
@@ -93,7 +92,8 @@ In my analysis, I used reference code, so the blank values means it's the refere
 Univariable is the crude hazard ratio, and the multivariable is the adjusted effect(controlling for other variables). Here, I think the protein2, protein4, tumor stage and surgery type have potential association with survival experience. And there could be potential interaction among the proteins.  
 
 ```{r univ_result, include = T}
-univ_analysis %>% knitr::kable()
+univ_analysis %>% 
+  knitr::kable()
 ```
 Let me check the correlation among proteins and age. Obviously, some of them are correlated, but now I don't care about them.  
 
@@ -101,21 +101,25 @@ Let me check the correlation among proteins and age. Obviously, some of them are
 
 Here are some grouped KM plots. In survival analysis, we always use the log-rank test. However, it cannot detect the difference when the survival functions are crossed.  
 ```{r kmplots,include=T}
-# KM-plot
+#KM-plot
 #require(survminer)
 #require(survival)
 
 # grouped by quantile
 data <- data %>% 
   mutate(AgeGroup = as.numeric(Age >= quantile(Age)[2]) +
-           as.numeric(Age >= quantile(Age)[3])+
-           as.numeric(Age >= quantile(Age)[4]),
-         Pro4Group = as.numeric(Protein4 >= 0.5) 
+    as.numeric(Age >= quantile(Age)[3])+
+    as.numeric(Age >= quantile(Age)[4]),
+    Pro4Group = as.numeric(Protein4 >= 0.5) 
 )
 ```
 
 I find that the histology would impact the survial probability in the first year after surgery. the outcomes are a little within one year.  
 ```{r coxph1year, include = T}
+#################### fixing #############################
+###### connot install survminer in linux even locally####
+###### not suitable for this R version ##################
+
 ## compare the 1 year survival of the Ductal Carcinoma and Lobular Carcinoma
 #Histo1Year <- data %>% filter(survdays <=365) %>%
 #  filter(Histology %in% c('Infiltrating Ductal Carcinoma','Infiltrating Lobular Carcinoma')) %>%
@@ -125,6 +129,7 @@ I find that the histology would impact the survial probability in the first year
 #  tbl_regression(exp = TRUE,label = list(Lobular ~ 'Infiltrating Lobular Carcinoma')) %>%
 #  modify_caption('One year survival, Infiltrating Lobular Carcinoma vs Infiltrating Ductal Carcinoma. Crude HR') %>%
 #  bold_labels()
+######################################################
 ```
 
 Finally, I choose this model. I believe the protein 4 is associated with the survival experience. It's adjusted by tumor stage, histology, and protein2.  
@@ -132,11 +137,12 @@ Finally, I choose this model. I believe the protein 4 is associated with the sur
 ### final coxph model
 multi_analysis <- data %>%
   finalfit(OverallSurv,c('Protein4','Tumour_Stage','Histology','Protein2'))
-multi_analysis %>% knitr::kable()
+multi_analysis %>% 
+  knitr::kable()
 ```
 
 ### Objective 2: find the treatment and the expectation
-Generally, the treatment could be different because of the tumor stage. Here the surgery type and tumor stage are highlt correlated.  
+Generally, the treatment could be different because of the tumor stage. Here the surgery type and tumor stage are correlated.  
 ```{r surgerytype_corr,include =T}
 chisq.test(data$Surgery_type,data$Tumour_Stage)
 ``` 
@@ -144,6 +150,6 @@ chisq.test(data$Surgery_type,data$Tumour_Stage)
 
 ![Figure 6](../figs/part2_fig1.png)
 
-Just compare the mean effect of surgery type for different groups  
+Just compare the mean effects of surgery type for different groups  
 
 ![Figure 7](../figs/part2_fig2.png)
