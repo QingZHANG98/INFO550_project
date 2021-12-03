@@ -5,13 +5,8 @@ The dataset is a Real Breast Cancer Data from Kaggle (URL: https://www.kaggle.co
 More questions please report ISSUES or email me [qzha284@emory.edu](mailto:qzha284@emory.edu)
 
 ## Prerequisite
-This report is made by R 4.1.1.  
-R packages 'renv' is needed. All versions of packages are locked by renv.  
-GNU Make is needed. In MacOS, install the Xcode. In linux:
-```
-sudo apt-get install make
-```
-If you don't want to use terminal, run the code in report/R to generate figures and cleaned data. Render the report by report_Rmd/report.Rmd file.  
+**Docker is required**
+All the packages in R have been packed to my Docker image
 
 **Download the project and checkout the directory**
 
@@ -24,40 +19,18 @@ git clone https://github.com/QingZHANG98/INFO550_project.git
 
 cd INFO550_project # project_path
 ```
+## Go to the docker
+My docker images is qingzh11/info_550
 
-**Go to the R session:**  
-make sure the renv package has been installed.  
-
+Pull the image into local.
+Note: the pandoc version = 1.9 otherwise I cannot run it in Mac based docker.
 ```
-if(!require(renv)){
-  install.packages("renv")
-  require(renv)
-}
+docker pull qingzh11/info550:old_pandoc
 ```
-
-synchronize the library
-
-```
-renv::restore()
-```
-If there is an error in synchronizing packages, you should manually install the packages. Check what packages are needed:  
-```
-renv::status()
-```
-If the renv is not activated: 
-```
-## activate the environment
-renv::activate("./") ## "./" is the path of renv. If you have checkout
-```
-
 ## Execute the analysis
-
-```
 make report
 ```
-
 ## Open the report
-
 ```
 open ./report/report_Rmd/report.html
 ```
