@@ -6,6 +6,14 @@ The dataset is a Real Breast Cancer Data from Kaggle (URL: https://www.kaggle.co
 **Docker is required in terminal**  
 All the packages in R have been packed to my Docker image  
 
+## About renv  
+I use two methods to use renv auto-loader in building image
+```bash
+RUN Rscript -e 'renv::restore()' -y
+RUN R --vanilla -s -e 'renv::restore()'
+```
+The first one is faster, but sometimes it will fail to activate the environment in container.  
+
 ## Docker image
 My docker image is qingzh11/info_550:old_pandoc  
 https://hub.docker.com/repository/docker/qingzh11/info550  
