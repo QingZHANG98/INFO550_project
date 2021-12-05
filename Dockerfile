@@ -7,7 +7,8 @@ COPY ./ /INFO550_project/
 RUN chmod +x /INFO550_project/report/R/*.R
 RUN chmod +x /INFO550_project/report/report_Rmd/*.Rmd
 
-RUN Rscript -e "renv::restore()" -y
+RUN Rscript -e 'renv::restore()' -y
+RUN R --vanilla -s -e 'renv::restore()'
 
 WORKDIR /INFO550_project
 
